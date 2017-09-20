@@ -1,7 +1,7 @@
 /*1. Basic setup
-2. Dretermine winner
+2. Determine winner
 3. Basic AI and winner notification
-4. Minimaz algorithm
+4. Minimax algorithm
 */
 
 var origBoard;
@@ -49,6 +49,35 @@ function turn(squareId, player){
     // set the baord square to the players sign 
     origBoard[squareId] = player;
     document.getElementById(squareId).innerText = player;
+    let gameWon = checkWin(origBoard, player);
+    if(gameWon) gameOver(gameWon)
 
 }
-//sfasoidfasdfasdfasddscvbcvbcv
+//
+function checkWin(board, player){
+    let plays = board.reduce((a,e,i) => (e===player) ? a.concat(i) : a ,[]);
+    let gameWon = null;
+    //check if the game has been won
+    for(let [index, win] of winCombos.entries()){
+        // has the player played in all the spots needed for the win combo?
+        if(win.every(elem => plays.indexOf(elem) > -1)){
+            gameWon = {index: index, player: player};
+            break;
+        }
+    }
+    //if noone wins gameWon will return Null
+    //if winner gameWon will continue which player and which win combo
+    return gameWon;
+}
+
+function gameOver ( gameWon){
+    //go through each element of the win combo
+    for(let index of winCombos[gameWon.index]){
+        document.getElementById(index).style.backgroundColor = 
+            game.player === humanPlayer ? "blue": "red";
+    }
+    //go through each cell and make it unselectable
+    for(var i =0; i< cells.length; i++){
+        cells[i].removeEventListener('click', turnClick, false)
+    }
+}
