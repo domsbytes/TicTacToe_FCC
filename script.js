@@ -7,7 +7,7 @@
 var origBoard;
 const humanPlayer ='0';
 const aiPlayer = 'X';
-const winCombo = [
+const winCombos = [
     [0,1,2],// 1st row cross win
     [3,4,5],// 2nd row cross win
     [6,7,8],// 3rd row cross win
