@@ -74,7 +74,7 @@ function gameOver ( gameWon){
     //go through each element of the win combo
     for(let index of winCombos[gameWon.index]){
         document.getElementById(index).style.backgroundColor = 
-            game.player === humanPlayer ? "blue": "red";
+            gameWon.player == humanPlayer ? "blue": "red";
     }
     //go through each cell and make it unselectable
     for(var i =0; i< cells.length; i++){
