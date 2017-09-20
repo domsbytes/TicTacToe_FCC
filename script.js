@@ -13,7 +13,7 @@ const winCombos = [
     [6,7,8],// 3rd row cross win
     [0,3,6],// 1st col win
     [1,4,7],// 2nd col win
-    [3,5,8],// 3rd col win
+    [2,5,8],// 3rd col win
     [0,4,8],//right diagonal win
     [2,4,6]// left diagonal win
 ];
