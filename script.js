@@ -41,7 +41,13 @@ function startGame() {
 
 //Human clicking function 
 function turnClick(square) {
-    turn(square.target.id, humanPlayer);
+    //check if a place has been clicked
+    // if nither human or Ai has played spot
+    if(typeof origBoard[square.target.id]=='number'){
+        turn(square.target.id, humanPlayer);
+        //check if game is a tie
+        if(!checkTie()) turn(bestSpot(), aiPlayer);
+    }
 }
 
 // A turn in the game functionality
@@ -53,7 +59,7 @@ function turn(squareId, player){
     if(gameWon) gameOver(gameWon);
 
 }
-//
+//Function that checks if game has been won
 function checkWin(board, player){
     let plays = board.reduce((a,e,i) => (e===player) ? a.concat(i) : a ,[]);
     let gameWon = null;
@@ -78,6 +84,36 @@ function gameOver ( gameWon){
     }
     //go through each cell and make it unselectable
     for(var i =0; i< cells.length; i++){
-        cells[i].removeEventListener('click', turnClick, false)
+        cells[i].removeEventListener('click', turnClick, false);
     }
+    declareWinner(gameWon.player == humanPlayer ? "You Win!": "You Lose!");
+}
+//simple AI
+//finds all empty squares and fills in first one aviable
+function emptySquares() {
+    return origBoard.filter(s => typeof s == 'number');
+}
+
+//calculates best game move
+function bestSpot(){
+    return emptySquares()[0];
+}
+
+//Displays text based on who won game
+function declareWinner(who) {
+    document.querySelector(".endgame").style.display = "block";
+    document.querySelector(".endgame .text").innerText = who;
+}
+
+//checkTie func
+function checkTie(){
+    if (emptySquares().length ==0) {
+        for( var i =0; i < cells.length; i++){
+            cells[i].style.backgroundColor = "green";
+            cells[i].removeEventListener('click', turnClick, false);
+        }
+        declareWinner("Tie Game!");
+        return true;
+    }
+    return false;
 }
