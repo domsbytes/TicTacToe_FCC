@@ -50,7 +50,7 @@ function turn(squareId, player){
     origBoard[squareId] = player;
     document.getElementById(squareId).innerText = player;
     let gameWon = checkWin(origBoard, player);
-    if(gameWon) gameOver(gameWon)
+    if(gameWon) gameOver(gameWon);
 
 }
 //
