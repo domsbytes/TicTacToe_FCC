@@ -4,6 +4,15 @@
 4. Minimax algorithm
 */
 
+/* Minimax Alg
+ Algorithm that does the follwoing things:
+ 1) return a val if a terminal state is found (+10, 0, -10)
+ 2) go through available spots on the board
+ 3) call the minimax function on each avialable spot ( recursion)
+ 4) evaluate returning values from function calls
+ 5) and return the best value
+*/
+
 var origBoard;
 const humanPlayer ='0';
 const aiPlayer = 'X';
@@ -96,7 +105,8 @@ function emptySquares() {
 
 //calculates best game move
 function bestSpot(){
-    return emptySquares()[0];
+    //return emptySquares()[0];
+    return minimax(origBoard, aiPlayer).index;
 }
 
 //Displays text based on who won game
@@ -116,4 +126,59 @@ function checkTie(){
         return true;
     }
     return false;
+}
+
+function minimax(newBoard, player){
+    var avialSpots = emptySquares(newBoard);
+    //check for terminal states ( someone winning)
+    if( checkWin(newBoard, player)){
+        return{score: -10};
+    }else if(checkWin(newBoard, aiPlayer)){
+        return {score: 10};
+    }else if(avialSpots.length === 0){
+        return {score:0};// no more room to play
+    }
+    //collect the source from each empty spots to evaluate later
+    var moves =[];
+    for (var i = 0; i < avialSpots.length; i++){
+        var move = {};
+        move.index = newBoard[avialSpots[i]];
+        // set empty spot on new board to current player
+        newBoard[avialSpots[i]]= player;
+
+        if(player == aiPlayer){
+            //
+            var result = minimax(newBoard, humanPlayer);
+            move.score = result.score;
+        } else {
+            var result = minimax(newBoard, aiPlayer);
+            move.score = result.score;
+        }
+
+        newBoard[avialSpots[i]] = move.index;
+
+        moves.push(move);
+    }
+
+    var bestMove;
+    if(player === aiPlayer){
+        var bestScore = -10000;
+        for(var i=0; i<moves.length; i++){
+            if(moves[i].score > bestScore){
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }else {
+        var bestScore = 10000;
+        for(var i=0; i<moves.length; i++){
+            if(moves[i].score > bestScore){
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+
+    }
+    return moves[bestMove];
+    //has a bug right now of score undefined
 }
