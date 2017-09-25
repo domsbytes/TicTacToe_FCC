@@ -1,9 +1,5 @@
 # TicTacToe_FCC 
 
-Testing testing.
+Implementaion of Tic Tac Toe game following at tutorial at freeCodeCamp.
 
-Testing github connection. blah blah
-
-Diff comp test. new test kjafdhkjasdhfkjas
-
-sadfasdfasdfsad
+More can be seen at https://www.youtube.com/watch?v=P2TcQ3h0ipQ.

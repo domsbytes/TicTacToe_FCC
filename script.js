@@ -4,14 +4,6 @@
 4. Minimax algorithm
 */
 
-/* Minimax Alg
- Algorithm that does the follwoing things:
- 1) return a val if a terminal state is found (+10, 0, -10)
- 2) go through available spots on the board
- 3) call the minimax function on each avialable spot ( recursion)
- 4) evaluate returning values from function calls
- 5) and return the best value
-*/
 
 var origBoard;
 const humanPlayer ='0';
@@ -61,7 +53,7 @@ function turnClick(square) {
 
 // A turn in the game functionality
 function turn(squareId, player){
-    // set the baord square to the players sign 
+    // set the board square to the players sign 
     origBoard[squareId] = player;
     document.getElementById(squareId).innerText = player;
     let gameWon = checkWin(origBoard, player);
@@ -105,8 +97,8 @@ function emptySquares() {
 
 //calculates best game move
 function bestSpot(){
-    //return emptySquares()[0];
-    return minimax(origBoard, aiPlayer).index;
+    return emptySquares()[0];
+    //return minimax(origBoard, aiPlayer).index;
 }
 
 //Displays text based on who won game
@@ -127,6 +119,15 @@ function checkTie(){
     }
     return false;
 }
+
+/* Minimax Alg
+ Algorithm that does the follwoing things:
+ 1) return a val if a terminal state is found (+10, 0, -10)
+ 2) go through available spots on the board
+ 3) call the minimax function on each avialable spot ( recursion)
+ 4) evaluate returning values from function calls
+ 5) and return the best value
+*/
 
 function minimax(newBoard, player){
     var avialSpots = emptySquares(newBoard);
